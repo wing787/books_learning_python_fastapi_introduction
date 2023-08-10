@@ -1,8 +1,8 @@
-varsion: '3'
+version: '3'
 services:
   demo-app:
     build: .
-    volumns:
+    volumes:
       - .dockervenv:/src/.venv
       - .:/src
     ports:
