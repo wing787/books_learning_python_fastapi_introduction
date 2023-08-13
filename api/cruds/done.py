@@ -6,10 +6,10 @@ import api.models.task as task_model
 
 
 async def get_done(db: AsyncSession, task_id: int) -> task_model.Done | None:
-    result: Result = db.execute(
-        select(task_model.Done).filter(task_model.Done.task_id == task_id)
+    result: Result = await db.execute(
+        select(task_model.Done).filter(task_model.Done.id == task_id)
     )
-    return await result.scalars().first()
+    return result.scalars().first()
 
 
 async def create_done(db: AsyncSession, task_id: int) -> task_model.Done:
@@ -20,6 +20,6 @@ async def create_done(db: AsyncSession, task_id: int) -> task_model.Done:
     return done
 
 
-async def delete_done(db: AsyncSession, done: task_model.Done) -> None:
-    await db.delete(done)
+async def delete_done(db: AsyncSession, original: task_model.Done) -> None:
+    await db.delete(original)
     await db.commit()
